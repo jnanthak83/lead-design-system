@@ -360,6 +360,22 @@ Soft budget for `@leadbank/ui` `dist/index.js` gzipped size, measured at every c
 - `data-with-icon` exposes `"true"` / `"false"` for callers who need to adjust surrounding layout.
 - Backwards compatible — existing call sites that don't pass an `icon` render identically (apart from a small layout refactor to use a flex row + body column, which preserves visual output).
 
+### 8.6 Button surface vs. Figma source — **Decision: documented Lead-side gaps, not TODOs**
+
+The Button-only Lane 3 audit prototype (JES-77) compares `Button.tsx` to `Button.figma.tsx` and emits [`packages/lead-design-tokens-cli/docs/audits/button-spec-audit.md`](../lead-design-tokens-cli/docs/audits/button-spec-audit.md). The non-zero findings below are **intentional Lead API decisions**, not parity gaps to close:
+
+**React-only props (no Figma surface today):**
+
+- `loadingLabel` — accessible label announced while `loading={true}`. The visual loading state is captured by Figma's `State=Loading` variant, but the label string is a behavior-only API and has no Figma equivalent.
+- `leadingIcon` / `trailingIcon` — `ReactNode` slots. Figma uses boolean show/hide toggles + nested icon instances (`Show Left Icon` / `Left Icon` / `Show Right Icon` / `Right Icon`); Lead exposes a single `ReactNode` slot per side so callers can pass any icon component without Lead committing to an icon library. This is the same reason §8.5 declines to ship default `Alert` icons.
+
+**Figma-only values (no React surface today):**
+
+- `Variant=Link` — Lead does not ship a link-styled Button variant. Per §8.1, link-as-button is intentionally deferred to a future dedicated `LinkButton` component rather than added as a `Button` variant.
+- `Size=icon` — Lead does not ship an icon-only Button size. Icon-only triggers compose `Button` with a single child icon and an `aria-label`, matching the §8.2 tooltip-as-description policy. No square-icon size will be added without an explicit re-decision here.
+
+These are policy, not work items. The audit report is expected to keep listing them; the next run can be read as a diff against this section.
+
 ---
 
 ## 8b. Still-open API decisions
