@@ -85,7 +85,8 @@ design-tokens build --input tokens/normalized/tokens.json --out ./out/tokens.css
 ├── docs/
 │   ├── DESIGN-DECISIONS.md      (copy from authored source)
 │   ├── DESIGN.md                (copy from authored source)
-│   └── cli-spec.md              (copy from authored source)
+│   ├── cli-spec.md              (copy from authored source)
+│   └── audits/                  Lane 3 advisory reports (JES-77; Button-only prototype)
 ├── tokens/
 │   └── source/paper/
 │       ├── tokens.paper.json     canonical paper source
@@ -101,6 +102,7 @@ npm test                    # run all unit tests (50 cases)
 npm run lint:schemas        # meta-validate the authored-tier schemas
 npm run check-decisions     # verify [D##] references resolve
 npm run build               # build v1: emit ../lead-ui/src/generated/tokens.css from the fixture
+npm run audit:button-spec   # advisory: regenerate docs/audits/button-spec-audit.md (JES-77; Button-only, no Figma API, not CI-integrated)
 node bin/design-tokens.js --help
 node bin/design-tokens.js import --force
 node bin/design-tokens.js check-exceptions --json
